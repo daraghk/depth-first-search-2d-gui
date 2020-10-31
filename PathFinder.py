@@ -49,6 +49,7 @@ class Gui:
 
     def depth_first_search(self, row, col, target):
         if self.grid[row][col] == target:
+            self.grid[row][col] = 'Y'
             self.update_grid_position_on_screen(row, col, 'Y')
             return
 
@@ -77,15 +78,23 @@ class Gui:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.game_done = True
-            self.draw_original_grid()
-            time.sleep(5)
-            self.depth_first_search(1, 1, 310)
-            time.sleep(100)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.game_done = True
+                    if event.key == pygame.K_RETURN:
+                        self.draw_original_grid()
+                    if event.key == pygame.K_s:
+                        self.depth_first_search(3, 4, 310)
         pygame.quit()
 
 
-grid_t = [[1, 2, 3, 10, 99], [4, 5, 6, 3, 99], [5, 34, 6, 7, 99], [56, 67, 34, 90, 99], [100, 34, 67, 310, 99]]
-gui = Gui(600, grid_t)
+test_grid = [[1, 2, 3, 10, 99],
+          [4, 5, 6, 3, 99],
+          [5, 34, 6, 7, 99],
+          [56, 67, 34, 90, 99],
+          [100, 34, 67, 310, 99]]
+
+gui = Gui(600, test_grid)
 gui.main()
 
 
