@@ -19,30 +19,30 @@ class Gui:
     def draw_original_grid(self):
         for row in range(len(self.grid)):
             for column in range(len(self.grid[0])):
-                pygame.draw.rect(self.screen, WHITE, self.get_coordinates(row, column))
+                pygame.draw.rect(self.screen, WHITE, self.coordinates_for_new_rectangle(row, column))
                 text = self.font.render(str(self.grid[row][column]), 1, BLACK)
-                self.screen.blit(text, self.write_position(row, column, text))
+                self.screen.blit(text, self.position_to_write_text(row, column, text))
         pygame.display.flip()
 
     def update_grid_position_on_screen(self, row_to_change, column_to_change, update_value):
         for row in range(len(self.grid)):
             for column in range(len(self.grid[0])):
-                pygame.draw.rect(self.screen, WHITE, self.get_coordinates(row, column))
+                pygame.draw.rect(self.screen, WHITE, self.coordinates_for_new_rectangle(row, column))
                 if row == row_to_change and column == column_to_change:
                     text = self.font.render(update_value, 1, BLACK)
-                    self.screen.blit(text, self.write_position(row_to_change, column_to_change, text))
+                    self.screen.blit(text, self.position_to_write_text(row_to_change, column_to_change, text))
                 else:
                     text = self.font.render(str(self.grid[row][column]), 1, BLACK)
-                    self.screen.blit(text, self.write_position(row, column, text))
+                    self.screen.blit(text, self.position_to_write_text(row, column, text))
         pygame.display.flip()
 
-    def get_coordinates(self, row, column):
+    def coordinates_for_new_rectangle(self, row, column):
         coordinates = [(self.margin + self.box_width) * column + self.margin,
                        (self.margin + self.box_width) * row + self.margin,
                        self.box_width, self.box_width]
         return coordinates
 
-    def write_position(self, row, column, text):
+    def position_to_write_text(self, row, column, text):
         positions = self.box_width * column - text.get_width() // 2 + self.box_width // 2, \
                     self.box_width * row - text.get_height() // 2 + self.box_width // 2
         return positions
