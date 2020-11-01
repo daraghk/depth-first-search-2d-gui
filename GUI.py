@@ -1,40 +1,9 @@
 import pygame
-import time
+from Search import SearchOnGUI
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FONT = "comicsans"
-
-class SearchOnGUI:
-    def __init__(self, GUI):
-        self.grid = GUI.grid
-        self.GUI = GUI
-
-    def depth_first_search(self, row, col, target):
-        if self.grid[row][col] == target:
-            self.grid[row][col] = 'Y'
-            self.GUI.write_underlying_grid_to_screen()
-            return
-
-        self.grid[row][col] = 'X'  # mark element as visited
-        self.GUI.write_underlying_grid_to_screen()
-        time.sleep(0.1)
-
-        directions = [[0, 1], [-1, 0], [0, -1], [1, 0]]  # right, up, left, down
-        for dir in directions:
-            new_row = row + dir[0]
-            new_col = col + dir[1]
-            if self.is_move_valid(new_row, new_col):
-                return self.depth_first_search(new_row, new_col, target)
-
-    def is_move_valid(self, row, col):
-        if row < 0 or row > len(self.grid) - 1:
-            return False
-        if col < 0 or col > len(self.grid[0]) - 1:
-            return False
-        if self.grid[row][col] == 'X':
-            return False
-        return True
 
 class Gui:
     def __init__(self, window_side_length, grid):
@@ -96,7 +65,7 @@ class Gui:
                         SearchOnGUI(self).depth_first_search(3, 4, 310)
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
-                    for rect in self.rectangles:
+                    for rect in self.current_rectangles:
                         if rect.collidepoint(pos):
                             print(rect)
         pygame.quit()
@@ -109,7 +78,3 @@ test_grid = [[1, 2, 3, 10, 99],
 
 gui = Gui(600, test_grid)
 gui.main()
-
-
-#fix gridlines and write positions
-#accept input grid search position
