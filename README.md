@@ -1,4 +1,4 @@
-# DepthFirstSearch-2D-GUI
+# depth-first-search-2d-gui
 A pygame-based GUI for visualizing depth first search over a 2-dimensional grid
 
 How to use:
